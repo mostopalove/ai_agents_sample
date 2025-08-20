@@ -1,8 +1,8 @@
-from agents import Runner
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from bigquery_agent.bigquery_agent import bigquery_agent
+from ai_clients.open_ai.main_agent import OpenAIClient
+from common.classes import AIAssistant
 
 router = APIRouter(prefix="/bigquery", tags=["BigQuery"])
 
@@ -14,5 +14,6 @@ class QueryHandlerRequest(BaseModel):
 @router.post("/query")
 async def query_handler(request: QueryHandlerRequest):
     user_request = request.message
-    orchestrator_output = await Runner.run(bigquery_agent, user_request)
-    return orchestrator_output.final_output
+    ai_assistant = AIAssistant(client=OpenAIClient)
+    response = await ai_assistant.chat(user_request)
+    return response
