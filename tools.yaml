@@ -1,0 +1,76 @@
+# Define data sources
+sources:
+  my-bigquery-source:
+    kind: bigquery
+    project: fiverr-bigquery-dev
+    # authentication defaults to ADC (Application Default Credentials)
+    # If running locally, ensure `gcloud auth application-default login` is done.
+
+# Expose tools from that source
+tools:
+  ask_data_insights:
+    kind: bigquery-conversational-analytics
+    source: my-bigquery-source
+    description: |
+      Use this tool to perform data analysis, get insights, or answer complex 
+      questions about the contents of specific BigQuery tables.
+
+  execute_sql_tool:
+    kind: bigquery-execute-sql
+    source: my-bigquery-source
+    description: Use this tool to execute sql statement.
+
+  forecast_tool:
+    kind: bigquery-forecast
+    source: my-bigquery-source
+    description: Use this tool to forecast time series data in BigQuery.
+
+  bigquery_get_dataset_info:
+    kind: bigquery-get-dataset-info
+    source: my-bigquery-source
+    description: Use this tool to get dataset metadata.
+
+  bigquery_get_table_info:
+    kind: bigquery-get-table-info
+    source: my-bigquery-source
+    description: Use this tool to get table metadata.
+
+  bigquery_list_dataset_ids:
+    kind: bigquery-list-dataset-ids
+    source: my-bigquery-source
+    description: Use this tool to get dataset metadata.
+
+  bigquery_list_table_ids:
+    kind: bigquery-list-table-ids
+    source: my-bigquery-source
+    description: Use this tool to get table metadata.
+
+#  # Example: Querying a user table in BigQuery
+#  search_users_bq:
+#    kind: bigquery-sql
+#    source: my-bigquery-source
+#    statement: |
+#      SELECT
+#        id,
+#        name,
+#        email
+#      FROM
+#        `my-project.my-dataset.users`
+#      WHERE
+#        id = @id OR email = @email;
+#    description: |
+#      Use this tool to get information for a specific user.
+#      Takes an id number or a name and returns info on the user.
+#
+#      Example:
+#      {{
+#          "id": 123,
+#          "name": "Alice",
+#      }}
+#    parameters:
+#      - name: id
+#        type: integer
+#        description: User ID
+#      - name: email
+#        type: string
+#        description: Email address of the user
