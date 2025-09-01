@@ -14,6 +14,7 @@ class OpenAIClient(AIClient):
         await self.optimization_agent.setup()
         self.client = Agent(
             name="master_agent",
+            model="gpt-4.1",
             instructions=master_agent_prompt,
             tools=[
                 WebSearchTool(),
